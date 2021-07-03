@@ -52,5 +52,35 @@ namespace PushNotification.Api.Hubs
         {
             await Clients.All.Alert(1);
         }
+
+        public void PerformAction(List<int> arr_id, string action)
+        {
+            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            string s = "(";
+            foreach (int ele in arr_id)
+            {
+                s += ele.ToString();
+                s += ",";
+            }
+            s = s.Remove(s.Length - 1); s += ")";
+            string colname = "", value = "";
+            switch (action)
+            {
+                case "read": colname = "readyn"; value = "1"; break;
+                case "unread": colname = "readyn"; value = "0"; break;
+                case "deliver": colname = "delivered"; value = "1"; break;
+                case "delete": colname = "deleted"; value = "1"; break;
+            }
+
+            var cmdString = "update dbo.notifications set " + colname + " = " + value + " where notification_id in " + s;
+            SqlCommand com = new SqlCommand(cmdString, connection);
+            com.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
     }
 }

@@ -10,6 +10,7 @@ using PushNotification.Api.Hubs.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using PushNotification.Api.Models;
+using PushNotification.Api.Models.cs;
 
 namespace PushNotification.Api.Controllers
 {
@@ -44,11 +45,45 @@ namespace PushNotification.Api.Controllers
             cmd.Parameters.AddWithValue("@category", request.category);
             cmd.Parameters.AddWithValue("@AddedOn", DateTime.UtcNow);
             cmd.Parameters.AddWithValue("@readyn", 1);
+            cmd.Parameters.AddWithValue("@delivered", 0);
+            cmd.Parameters.AddWithValue("@deleted", 0);
 
             connection.Open();
             cmd.ExecuteNonQuery();
             Console.WriteLine("Records Inserted Successfully");
             await _chatHubContext.Clients.All.Alert(1);
         }
+        [HttpPost("/action")]
+        public async void PerformAction(resqustobj request)
+        {
+            List<int> arr_id = request.arr_id;
+            string action = request.action;
+            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            string s = "(";
+            foreach (int ele in arr_id)
+            {
+                s += ele.ToString();
+                s += ",";
+            }
+            s = s.Remove(s.Length - 1); s += ")";
+            string colname="", value="";
+            switch (action)
+            {
+                case "read": colname = "readyn"; value = "1"; break;
+                case "unread": colname = "readyn"; value = "0"; break;
+                case "deliver": colname = "delivered"; value = "1"; break;
+                case "delete": colname = "deleted"; value = "1"; break;
+            }
+
+            var cmdString = "update dbo.notifications set "+ colname + " = " + value +" where notification_id in " + s;
+            SqlCommand com = new SqlCommand(cmdString, connection);
+            com.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
     }
 }
