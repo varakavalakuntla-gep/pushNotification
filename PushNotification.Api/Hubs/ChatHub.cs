@@ -44,6 +44,8 @@ namespace PushNotification.Api.Hubs
                     responeList.Add(response);
                 }
             };
+
+            
             connection.Close();
             await Clients.All.ReceiveMessage(responeList);
         }

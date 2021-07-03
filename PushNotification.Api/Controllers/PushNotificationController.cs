@@ -51,6 +51,12 @@ namespace PushNotification.Api.Controllers
             connection.Open();
             cmd.ExecuteNonQuery();
             Console.WriteLine("Records Inserted Successfully");
+
+            var cmdString = "INSERT INTO trash SELECT * FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); DELETE FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); ";
+            SqlCommand q = new SqlCommand(cmdString, connection);
+            q.ExecuteNonQuery();
+
+            connection.Close();
             await _chatHubContext.Clients.All.Alert(1);
         }
         [HttpPost("/action")]
