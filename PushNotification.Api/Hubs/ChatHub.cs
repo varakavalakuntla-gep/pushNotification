@@ -19,13 +19,27 @@ namespace PushNotification.Api.Hubs
             this.configuration = config;
         }
 
-        public async Task SendMessage()
+        public async Task SendMessage(string state)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnectionString");
 
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-            SqlCommand com = new SqlCommand("Select * from dbo.notifications order by AddedOn desc", connection);
+            string sqlcmd = "Select * from dbo.notifications where deleted = 0 order by AddedOn desc";
+            if (state == "all")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 order by AddedOn desc";
+            }
+            else if (state == "unread")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 and readyn = 0 order by AddedOn desc";
+            }
+            else if (state == "anouncements")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 and category=4 order by AddedOn desc";
+            }
+            SqlCommand com = new SqlCommand(sqlcmd, connection);
+
             using SqlDataReader sqlDataReader = await com.ExecuteReaderAsync();
             List<NotificaitonsResponse> responeList = new List<NotificaitonsResponse>();
             if (sqlDataReader.HasRows)

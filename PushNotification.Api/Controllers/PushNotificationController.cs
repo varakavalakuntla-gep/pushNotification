@@ -44,7 +44,7 @@ namespace PushNotification.Api.Controllers
             cmd.Parameters.AddWithValue("@body", request.body);
             cmd.Parameters.AddWithValue("@category", request.category);
             cmd.Parameters.AddWithValue("@AddedOn", DateTime.UtcNow);
-            cmd.Parameters.AddWithValue("@readyn", 1);
+            cmd.Parameters.AddWithValue("@readyn", 0);
             cmd.Parameters.AddWithValue("@delivered", 0);
             cmd.Parameters.AddWithValue("@deleted", 0);
 
@@ -52,43 +52,13 @@ namespace PushNotification.Api.Controllers
             cmd.ExecuteNonQuery();
             Console.WriteLine("Records Inserted Successfully");
 
-            var cmdString = "INSERT INTO trash SELECT * FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); DELETE FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); ";
+            var cmdString = "INSERT INTO trash SELECT * FROM notifications WHERE AddedOn < DATEADD(day, -30, GETDATE()); DELETE FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); ";
             SqlCommand q = new SqlCommand(cmdString, connection);
             q.ExecuteNonQuery();
 
             connection.Close();
             await _chatHubContext.Clients.All.Alert(1);
-        }
-        [HttpPost("/action")]
-        public async void PerformAction(resqustobj request)
-        {
-            List<int> arr_id = request.arr_id;
-            string action = request.action;
-            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
-            SqlConnection connection = new SqlConnection(connectionString);
-            connection.Open();
-
-            string s = "(";
-            foreach (int ele in arr_id)
-            {
-                s += ele.ToString();
-                s += ",";
-            }
-            s = s.Remove(s.Length - 1); s += ")";
-            string colname="", value="";
-            switch (action)
-            {
-                case "read": colname = "readyn"; value = "1"; break;
-                case "unread": colname = "readyn"; value = "0"; break;
-                case "deliver": colname = "delivered"; value = "1"; break;
-                case "delete": colname = "deleted"; value = "1"; break;
-            }
-
-            var cmdString = "update dbo.notifications set "+ colname + " = " + value +" where notification_id in " + s;
-            SqlCommand com = new SqlCommand(cmdString, connection);
-            com.ExecuteNonQuery();
-
-            connection.Close();
+            await _chatHubContext.Clients.All.NewMessage(request);
         }
 
     }

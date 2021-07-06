@@ -11,6 +11,6 @@ namespace PushNotification.Api.Hubs.Clients
     {
         Task ReceiveMessage(List<NotificaitonsResponse> responsesList);
         Task Alert(int message);
-
+        Task NewMessage(NotificaitonsResponse response);
     }
 }
