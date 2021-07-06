@@ -1751,19 +1751,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vara_kavalakuntla\\.nuget\\packages\\": {}
+    "C:\\Users\\raghav_virmani\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vara_kavalakuntla\\source\\techthon\\pushNotification - Copy\\PushNotification.Api\\PushNotification.Api.csproj",
+      "projectUniqueName": "C:\\Users\\raghav_virmani\\source\\repos\\pushNotification\\PushNotification.Api\\PushNotification.Api.csproj",
       "projectName": "PushNotification.Api",
-      "projectPath": "C:\\Users\\vara_kavalakuntla\\source\\techthon\\pushNotification - Copy\\PushNotification.Api\\PushNotification.Api.csproj",
-      "packagesPath": "C:\\Users\\vara_kavalakuntla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vara_kavalakuntla\\source\\techthon\\pushNotification - Copy\\PushNotification.Api\\obj\\",
+      "projectPath": "C:\\Users\\raghav_virmani\\source\\repos\\pushNotification\\PushNotification.Api\\PushNotification.Api.csproj",
+      "packagesPath": "C:\\Users\\raghav_virmani\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\raghav_virmani\\source\\repos\\pushNotification\\PushNotification.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vara_kavalakuntla\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\raghav_virmani\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1771,8 +1771,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://gepdev.pkgs.visualstudio.com/_packaging/GEPPackages@Release/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
@@ -1817,7 +1816,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

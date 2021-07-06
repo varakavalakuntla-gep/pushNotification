@@ -1,0 +1,195 @@
+.notificationComponent{
+    float: right;
+    margin: 3px 20px;
+    width: 320px;
+    background-color: white;
+    border: solid #4682B4;
+}
+.header{
+    background-color: #4682B4;
+    padding: 10px;
+    color: white;
+    font-weight: 500;
+}
+
+.notificationMenu{
+    display: flex;
+    justify-content: flex-start;
+}
+.searchMenu{
+    border-bottom: solid 1px #4682B4;
+    padding-bottom: 5px;
+}
+.active{
+    background-color:#4682B4;
+    color: white !important;
+}
+.notificationMenu span{
+    padding: 3px 10px;
+    margin: 10px 3px;
+    border: solid 1px #4682B4;
+    border-radius: 50px;
+    width: fit-content;
+    font-size: 12px;
+    font-weight: bold;
+    color: #4682B4;
+    cursor: pointer;
+}
+.notificationMenu span:hover{
+    background-color:#4682B4;
+    color: white !important;
+}
+.notificationMenu div{
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: flex-end;
+}
+.icon{
+    height: 100%;
+    padding: 0 5px;
+}
+.notificationItem{
+    padding-bottom: 5px;
+    border-bottom: solid 1px #4682B4;
+}
+.notificationItem div{
+    border: none;
+}
+.notificationItem:hover{
+    background-color: #72a0c1;
+    color: white;
+    cursor: pointer;
+}
+.highlight{
+    font-weight: 700;
+    background-color: #CCEEF4
+    ;
+}
+.title{
+    padding-left: 17px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: bold;
+    margin: 10px 0 0 0;
+}
+title>input[type="radio"]{
+    border: none;
+}
+input[type="radio"] + *::before{
+    border:none;
+}
+input[type="radio"] + *::after{
+    border:none;
+}
+
+.body{
+    text-align: left;
+    font-size: 12px;
+    padding-left: 20px;
+    margin: 5px 0 0 0;
+}
+.footer{
+    margin-left: 20px;
+    margin-top: 2px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.footer span{
+    font-size: 12px;
+    padding-top: 10px;
+}
+.forecast{
+    background-color: green;
+    border: solid green;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.Forecast, .Inventory, .Order, .Anouncements, .Unknown{
+    border-radius: 5px;
+    padding: 2px 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    width: fit-content;
+}
+.Forecast{
+    background-color: green;
+    border: solid green;
+}
+.Inventory{
+    background-color: #FF7F50;
+    border: solid #FF7F50;
+}
+.Order{
+    background-color: blue;
+    border: solid blue;
+}
+.Anouncements{
+    background-color: #B8860B;
+    border: solid #B8860B;
+}
+.Unknown{
+    background-color: #A9A9A9;
+    border: solid #A9A9A9;
+}
+
+
+.checkbox{
+    cursor: pointer;
+}
+.newColor{
+    fill: red;
+}
+.nrmlColor{
+    fill: white;
+}
+
+.notificationList{
+    overflow-y: scroll;
+    height: 410px;
+}
+.wrapper {
+    overflow: auto;
+}
+
+.wrapper::-webkit-scrollbar{
+  width: 15px;
+  border-radius: 20px;
+}
+
+.wrapper::-webkit-scrollbar-track{
+  background: #CCEEF4;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb{
+  width: 24px;
+  background: #4682B4;
+  border: 5px solid #CCEEF4;
+  border-radius: 15px;
+}
+
+.searchClass{
+    width: 80%;
+    font-weight: bold;
+}
+.modelBelow{
+    display: flex;
+    justify-content: space-between;
+}
+.modelFooter{
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+.hideSearch{
+    display: none;
+}
+.clearAll{
+    cursor: pointer;
+    color: red;
+}

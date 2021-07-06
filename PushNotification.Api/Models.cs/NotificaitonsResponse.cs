@@ -13,5 +13,8 @@ namespace PushNotification.Api.Models
         public int category { get; set; }
         public DateTime AddedOn { get; set; }
         public int readyn { get; set; }
+        public int delivered { get; set; }
+        public int deleted { get; set; }
+
     }
 }

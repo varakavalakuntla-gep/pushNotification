@@ -19,13 +19,27 @@ namespace PushNotification.Api.Hubs
             this.configuration = config;
         }
 
-        public async Task SendMessage()
+        public async Task SendMessage(string state)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnectionString");
 
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-            SqlCommand com = new SqlCommand("Select * from dbo.notifications order by AddedOn desc", connection);
+            string sqlcmd = "Select * from dbo.notifications where deleted = 0 order by AddedOn desc";
+            if (state == "all")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 order by AddedOn desc";
+            }
+            else if (state == "unread")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 and readyn = 0 order by AddedOn desc";
+            }
+            else if (state == "anouncements")
+            {
+                sqlcmd = "Select * from dbo.notifications where deleted = 0 and category=4 order by AddedOn desc";
+            }
+            SqlCommand com = new SqlCommand(sqlcmd, connection);
+
             using SqlDataReader sqlDataReader = await com.ExecuteReaderAsync();
             List<NotificaitonsResponse> responeList = new List<NotificaitonsResponse>();
             if (sqlDataReader.HasRows)
@@ -44,6 +58,8 @@ namespace PushNotification.Api.Hubs
                     responeList.Add(response);
                 }
             };
+
+            
             connection.Close();
             await Clients.All.ReceiveMessage(responeList);
         }
@@ -52,5 +68,35 @@ namespace PushNotification.Api.Hubs
         {
             await Clients.All.Alert(1);
         }
+
+        public void PerformAction(List<int> arr_id, string action)
+        {
+            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+            string s = "(";
+            foreach (int ele in arr_id)
+            {
+                s += ele.ToString();
+                s += ",";
+            }
+            s = s.Remove(s.Length - 1); s += ")";
+            string colname = "", value = "";
+            switch (action)
+            {
+                case "read": colname = "readyn"; value = "1"; break;
+                case "unread": colname = "readyn"; value = "0"; break;
+                case "deliver": colname = "delivered"; value = "1"; break;
+                case "delete": colname = "deleted"; value = "1"; break;
+            }
+
+            var cmdString = "update dbo.notifications set " + colname + " = " + value + " where notification_id in " + s;
+            SqlCommand com = new SqlCommand(cmdString, connection);
+            com.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
     }
 }

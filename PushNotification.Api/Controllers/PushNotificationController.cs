@@ -10,6 +10,7 @@ using PushNotification.Api.Hubs.Clients;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using PushNotification.Api.Models;
+using PushNotification.Api.Models.cs;
 
 namespace PushNotification.Api.Controllers
 {
@@ -43,12 +44,22 @@ namespace PushNotification.Api.Controllers
             cmd.Parameters.AddWithValue("@body", request.body);
             cmd.Parameters.AddWithValue("@category", request.category);
             cmd.Parameters.AddWithValue("@AddedOn", DateTime.UtcNow);
-            cmd.Parameters.AddWithValue("@readyn", 1);
+            cmd.Parameters.AddWithValue("@readyn", 0);
+            cmd.Parameters.AddWithValue("@delivered", 0);
+            cmd.Parameters.AddWithValue("@deleted", 0);
 
             connection.Open();
             cmd.ExecuteNonQuery();
             Console.WriteLine("Records Inserted Successfully");
+
+            var cmdString = "INSERT INTO trash SELECT * FROM notifications WHERE AddedOn < DATEADD(day, -30, GETDATE()); DELETE FROM notifications WHERE AddedOn < DATEADD(day, -15, GETDATE()); ";
+            SqlCommand q = new SqlCommand(cmdString, connection);
+            q.ExecuteNonQuery();
+
+            connection.Close();
             await _chatHubContext.Clients.All.Alert(1);
+            await _chatHubContext.Clients.All.NewMessage(request);
         }
+
     }
 }

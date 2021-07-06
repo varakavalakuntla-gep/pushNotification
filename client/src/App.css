@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+  /* background-image: url("./Capture.PNG");
+  height: 100vh;
+  z-index: -1; */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.homeHeader{
+  width: 100%;
+  background-color: teal;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.homeHeader p{
+  left: 10px;
+}
+.notifiIcon{
+  margin-right: 150px;
+  cursor: pointer;
+}
+.headerLeft{
+  display: flex;
+  align-items: center;
+}
+.menu{
+  margin: 0 10px;
+}
