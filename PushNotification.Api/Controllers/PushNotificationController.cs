@@ -56,8 +56,13 @@ namespace PushNotification.Api.Controllers
             SqlCommand q = new SqlCommand(cmdString, connection);
             q.ExecuteNonQuery();
 
+
+            var cmdString1 = "select count(*) from notifications where readyn=0 and deleted=0";
+            SqlCommand com1 = new SqlCommand(cmdString1, connection);
+            var cnt = (int)com1.ExecuteScalar();
+
             connection.Close();
-            await _chatHubContext.Clients.All.Alert(1);
+            await _chatHubContext.Clients.All.Alert(cnt);
             await _chatHubContext.Clients.All.NewMessage(request);
         }
 

@@ -66,8 +66,35 @@ namespace PushNotification.Api.Hubs
 
         public async Task SendAlert()
         {
-            await Clients.All.Alert(1);
+            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+
+            var cmdString = "select count(*) from notifications where readyn=0 and deleted=0";
+            SqlCommand com = new SqlCommand(cmdString, connection);
+            var cnt = (int)com.ExecuteScalar();
+
+            connection.Close();
+            await Clients.All.Alert(cnt);
+ //           await Clients.All.Alert(1);
         }
+
+        public async Task GetUnread()
+        {
+            string connectionString = configuration.GetConnectionString("DefaultConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+
+            var cmdString = "select count(*) from notifications where readyn=0 and deleted=0";
+            SqlCommand com = new SqlCommand(cmdString, connection);
+            var cnt = (int)com.ExecuteScalar();
+
+            connection.Close();
+            await Clients.All.Alert(cnt);
+        }
+
 
         public void PerformAction(List<int> arr_id, string action)
         {
@@ -96,6 +123,7 @@ namespace PushNotification.Api.Hubs
             com.ExecuteNonQuery();
 
             connection.Close();
+            GetUnread();
         }
 
     }
