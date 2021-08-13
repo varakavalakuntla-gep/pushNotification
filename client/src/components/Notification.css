@@ -49,7 +49,6 @@
     padding: 0 5px;
 }
 .notificationItem{
-    padding-bottom: 5px;
     border-bottom: solid 1px #4682B4;
 }
 .notificationItem div{
@@ -70,7 +69,13 @@
     text-align: left;
     font-size: 15px;
     font-weight: bold;
-    margin: 10px 0 0 0;
+    margin: 0 0 0 0;
+}
+.delbutton{
+    color: red;
+    padding-right: 17px;
+    text-align: right;
+    margin: 0 0 0 0;
 }
 title>input[type="radio"]{
     border: none;
@@ -86,7 +91,7 @@ input[type="radio"] + *::after{
     text-align: left;
     font-size: 12px;
     padding-left: 20px;
-    margin: 5px 0 0 0;
+    margin: 1px 0 0 0;
 }
 .footer{
     margin-left: 20px;
@@ -97,7 +102,7 @@ input[type="radio"] + *::after{
 }
 .footer span{
     font-size: 12px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 .forecast{
     background-color: green;
@@ -116,6 +121,7 @@ input[type="radio"] + *::after{
     font-size: 12px;
     font-weight: bold;
     width: fit-content;
+    height: fit-content;
 }
 .Forecast{
     background-color: green;

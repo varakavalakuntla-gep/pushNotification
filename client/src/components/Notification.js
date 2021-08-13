@@ -135,12 +135,20 @@ const Notification = ({  connection }) => {
         var date2 = new Date();  
         var time_difference = date2.getTime() - date1.getTime();   
         var days_difference = Math.floor(time_difference / (1000 * 60 * 60 * 24));  
+        var hrs_difference = Math.floor(time_difference / (1000 * 60 * 60)) - 5;
+        var mins_difference = Math.floor(time_difference / (1000 * 60)) - 330;
 
         if(days_difference>0){
             return days_difference.toString() +" days ago";
         }
         else{
-            return "Today"
+            if(hrs_difference<1) 
+            {
+
+                if(mins_difference>=1) return mins_difference.toString() +" minutes ago";
+                else return "Just now";
+            }
+            return hrs_difference.toString() +" hours ago";
         }
     }
     function getCategory(category){
@@ -168,7 +176,12 @@ const Notification = ({  connection }) => {
             )
         }
     }
+    function getUnreadcnt()
+    {
+        ;
+    }
 
+    
     async function updateUnread(id){
         if (connection.connectionStarted) {
             try {
@@ -354,14 +367,15 @@ const Notification = ({  connection }) => {
                         </div>
                     <div className="notificationList wrapper">
                         {sortedAlerts.map(alert => (
-                            <div key = {alert.notification_id}className={"notificationItem " + (alert.readyn == 0 ? "highlight" : "nrml")} onClick={()=> popUp(alert)}>
-                                <div className="headerLine">
+                            <div key = {alert.notification_id}className={"notificationItem " + (alert.readyn == 0 ? "highlight" : "nrml")} >
+                                <div className="headerLine" onClick={()=> popUp(alert)}>
                                     <p className="title">{alert.title}</p>
+                                    
                                     <p className="body">{para(alert.body)}</p>
                                 </div>
                                 <div className="footer">
                                     {getCategory(alert.category)}
-                                    <span>{getTime(alert.addedOn)}</span>
+                                    <span>{getTime(alert.addedOn)} <strong><a className="delbutton" onClick={()=> deleteAlert(alert.notification_id)} color="primary" >[X] </a> </strong></span>
                                 </div>
                             </div>
                         ))}

@@ -49,10 +49,14 @@
 }
 .homeHeader p{
   left: 10px;
+  margin-right: 100px;
 }
 .notifiIcon{
-  margin-right: 150px;
   cursor: pointer;
+}
+.iconwText{
+  display: flex;
+  align-items: center;
 }
 .headerLeft{
   display: flex;
